@@ -22,7 +22,7 @@
 ////
 // Constants
 ////
-#define BUFFER_SIZE 1000
+#define BUFFER_SIZE                     1000
 #define	ETHERNET_PROTO_ARP		0x0806
 #define ETHERNET_STRING_MAX		18
 
@@ -55,9 +55,9 @@ return NULL;
 // is_well_done: handle error when something is well or bad create/set 
 void is_well_done ( int return_value, char* message ) {
   if ( (return_value == -1) ) { 
-	  perror(message); 
-		exit(1);
-	}
+    perror(message); 
+    exit(1);
+  }
 }
 ////
 // Main procedure
@@ -69,36 +69,35 @@ int main(void){
   // Variables 
   long timeout; 
   
-	// 3.5 (part 1)
-	// ==============================================================================			
+  // 3.5 (part 1)
+  // ==============================================================================
 	
-	//set the interface 'tap0'			
-	char interface[BUFFER_SIZE];
-	strcpy(interface, "tap0");
+  //set the interface 'tap0'			
+  char interface[BUFFER_SIZE];
+  strcpy(interface, "tap0");
 
-	// get he file descriptor from this interface
-	int fd_tap = allocateNetworkDevice(interface,IFF_TAP|IFF_NO_PI);
-		
-	// Verify if the allocation has been done perfectly
-	 is_well_done(fd_tap," 'AllocateNetworkDevice' failed for the 'TAP' interface\n ");
+  // get he file descriptor from this interface
+  int fd_tap = allocateNetworkDevice(interface,IFF_TAP|IFF_NO_PI);
+  // Verify if the allocation has been done perfectly
+  is_well_done(fd_tap," 'AllocateNetworkDevice' failed for the 'TAP' interface\n ");
 
   //set tap0 descriptor
   interfaces[0].tap=fd_tap;
 
   // Create a receive packet event
-	int evt = eventsCreate(1, &(interfaces[0]));
+  int evt = eventsCreate(1, &(interfaces[0]));
   // Verify if the receive packet event has been successful created 
   is_well_done(evt, " receive packet event creation failed ");
   
-	// Associate a selector to the event created 'evt'
-	int fd_evt_assoc = eventsAssociateDescriptor( evt, fd_tap, NULL);
+  // Associate a selector to the event created 'evt'
+  int fd_evt_assoc = eventsAssociateDescriptor( evt, fd_tap, NULL);
 	
   // Assigned the decode actions to 'evt'
-	int evt_action = eventsAddAction( evt, ethernetDecodePacket, 0);
+  int evt_action = eventsAddAction( evt, ethernetDecodePacket, 0);
   // Verify if the action assigment is well done 
   is_well_done(evt_action, " Action 'EthernetDecodePacket' failed  in adding ");
   
-/*
+  
   // 3.5 (part 2)
 	// ==============================================================================
   
@@ -123,12 +122,12 @@ int main(void){
   arraysSetValue(&packet, "size", &size, sizeof(int), 0);
 
   // Create a send packet event
-	int evt_send = eventsCreate(2, packet);
-	// Verify if the send packet event has been successful created 
+  int evt_send = eventsCreate(2, packet);
+  // Verify if the send packet event has been successful created 
   is_well_done(evt_send, " send packet event creation failed ");
   
-	// Assigned the send packet action to the evt_send   
-	int evt_send_action = eventsAddAction(evt_send, ethernetSendPacket, 1);
+  // Assigned the send packet action to the evt_send   
+  int evt_send_action = eventsAddAction(evt_send, ethernetSendPacket, 1);
   // Verify if the action assigment is well done 
   is_well_done(evt_send_action, " Action 'ethernetSendPacket' failed  in adding ");
   

@@ -136,7 +136,7 @@ int main(void){
   int evt_send_schedule_selector = eventsSchedule(evt_send, timeout, packet);
   is_well_done(evt_send_action, " Setting of Schedule selector for the send event failed ");
   
-*/
+
 
 	eventsScan();
 	

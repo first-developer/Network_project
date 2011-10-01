@@ -30,6 +30,9 @@ typedef struct{
 // Prototypes
 ////
 
+// to create a neww assoc array
+AssocArray *array createAssocArray();
+
 int arraysGetSize(AssocArray *array);
 int arraysTestIndex(AssocArray *array,char *index,unsigned char flags);
 void *arraysGetValue(

@@ -35,7 +35,6 @@ static EthernetInterface interfaces[]={
   {-1,"",}
   };
 
-EthernetAddress TAP_MAC_ADRESS =  {{0x00,0x01,0x02,0x03,0x04,0x05}};
 
 ////
 // Functions
@@ -58,6 +57,15 @@ void is_well_done ( int return_value, char* message ) {
 	  perror(message); 
 		exit(1);
 	}
+}
+
+// Verify if the allocation is well done
+void is_well_allocated ((void *) structure, char* msg) {
+  if (structure == NULL) {
+    perror(msg);
+    exit(1);
+  }
+  
 }
 ////
 // Main procedure
@@ -98,20 +106,20 @@ int main(void){
   // Verify if the action assigment is well done 
   is_well_done(evt_action, " Action 'EthernetDecodePacket' failed  in adding ");
   
-/*
+
   // 3.5 (part 2)
 	// ==============================================================================
   
   // init data assoc array and setting data field 
-  AssocArray *packet=NULL;
-  arraysSetValue(&packet, "data", (void *)"abcdefghijklmnopq", ETHERNET_STRING_MAX, AARRAY_DONT_DUPLICATE);
+  AssocArray *packet = createAssocArray();
+  arraysSetValue(&packet, "data", (void *)"abcdefghijklmnopq", 18, AARRAY_DONT_DUPLICATE);
   
   // Setting dst field
-  EthernetAddress dst = {{0x00,0x01,0x02,0x03,0x04,0x05}};
+  EthernetAddress dst = {{0xFF,0xFF,0xFF,0xFF,0xFF,0xFF}};
   arraysSetValue(&packet, "dst", &dst, sizeof(EthernetAddress), 0);
   
   // Setting src field
-  EthernetAddress src= TAP_MAC_ADRESS;
+  EthernetAddress src= interfaces[0].address;
   arraysSetValue(&packet, "src", &src, sizeof(EthernetAddress), 0);
   
   // Setting protocole (ex: ARP)
@@ -137,7 +145,7 @@ int main(void){
   int evt_send_schedule_selector = eventsSchedule(evt_send, timeout, packet);
   is_well_done(evt_send_action, " Setting of Schedule selector for the send event failed ");
   
-*/
+
 
 	eventsScan();
 	

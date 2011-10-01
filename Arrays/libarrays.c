@@ -35,6 +35,19 @@ static void _arraysFreeValue(AssocArray *array,int index);
 ////
 
 //
+// Create a new assoc array 
+//
+AssocArray * createAssocArray() {
+  AssocArray * newArray = (AssocArray *)malloc(sizeof(AssocArray));
+  if ( newArray == (AssocArray *)0 ) {
+    perror(" NewAssocArray failed in creating\n");
+    exit(1);
+  }
+  return newArray;
+}
+
+
+//
 // Get array size
 //
 int arraysGetSize(AssocArray *array){

@@ -31,7 +31,7 @@ typedef struct{
 ////
 
 // to create a neww assoc array
-AssocArray *array createAssocArray();
+AssocArray * createAssocArray();
 
 int arraysGetSize(AssocArray *array);
 int arraysTestIndex(AssocArray *array,char *index,unsigned char flags);

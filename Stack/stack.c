@@ -69,7 +69,7 @@ int main(void){
 
   // Variables 
   long timeout; 
-  
+  char *data = (char*)malloc(18*sizeof(char));
   // 3.5 (part 1)
   // ==============================================================================
 	
@@ -103,8 +103,10 @@ int main(void){
 	// ==============================================================================
   
   // init data assoc array and setting data field 
-  AssocArray *packet = createAssocArray();
-  arraysSetValue(&packet, "data", (void *)"abcdefghijklmnopq", 18, AARRAY_DONT_DUPLICATE);
+  AssocArray *packet = NULL;
+  strcpy(data,"abcdefghijklmnopq");
+  
+  arraysSetValue(&packet, "data", (void*)data, 18, AARRAY_DONT_DUPLICATE);
   
   // Setting dst field
   EthernetAddress dst = {{0xFF,0xFF,0xFF,0xFF,0xFF,0xFF}};

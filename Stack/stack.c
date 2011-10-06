@@ -59,14 +59,7 @@ void is_well_done ( int return_value, char* message ) {
   }
 }
 
-// Verify if the allocation is well done
-void is_well_allocated ((void *) structure, char* msg) {
-  if (structure == NULL) {
-    perror(msg);
-    exit(1);
-  }
-  
-}
+
 ////
 // Main procedure
 ////
@@ -147,7 +140,6 @@ int main(void){
 
   // Scanevents
   eventsScan();
-
 	
   exit(0);
   
